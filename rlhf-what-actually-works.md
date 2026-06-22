@@ -1,5 +1,5 @@
 ---
-title: "RLHF: what actually works in production"
+title: "RLHFF: what actually works in production"
 description: Less theory, more of the messy decisions you actually face when shipping this into the world.
 date: 2026-06-12
 author: Aisha Okonkwo
