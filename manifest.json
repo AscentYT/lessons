@@ -13,30 +13,6 @@
     ],
     "hue": 220,
     "featured": true,
-    "quickChecks": [
-      {
-        "q": "In scaled dot-product attention, the query–key dot product is divided by what before the softmax?",
-        "options": [
-          "The number of attention heads",
-          "The square root of the key dimension",
-          "The sequence length",
-          "The batch size"
-        ],
-        "answer": 1,
-        "why": "Dividing by √dₖ keeps the dot products from growing large in magnitude, which would otherwise push softmax into a near one-hot regime with vanishing gradients."
-      },
-      {
-        "q": "Offline eval accuracy sits far above live production performance. The most likely culprit is…",
-        "options": [
-          "The model is too small",
-          "Train/eval contamination or distribution shift",
-          "The learning rate is too low",
-          "Too few attention heads"
-        ],
-        "answer": 1,
-        "why": "A gap that large almost always means the eval set leaked into training, or it no longer matches the live distribution — rarely a raw capacity problem."
-      }
-    ],
     "quiz": [
       {
         "q": "What does retrieval-augmented generation primarily reduce?",

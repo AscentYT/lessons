@@ -20,6 +20,17 @@ Every token is projected into three vectors: a query, a key, and a value. The qu
 
 Raw dot products grow with dimension, and large values push softmax toward a one-hot spike with vanishing gradients. The fix is a single scalar: divide by the square root of the key dimension before the softmax. Small, almost trivial — and load-bearing.
 
+```quickcheck
+q: In scaled dot-product attention, the query–key dot product is divided by what before the softmax?
+options:
+  - The number of attention heads
+  - The square root of the key dimension
+  - The sequence length
+  - The batch size
+answer: 1
+explanation: Dividing by √dₖ keeps the dot products from growing large in magnitude, which would otherwise push softmax into a near one-hot regime with vanishing gradients.
+```
+
 ### Multi-head attention
 
 One attention pattern can only express one notion of relevance. Running several in parallel — each with its own projections — lets the model track syntax in one head, coreference in another, and position in a third, then concatenate the results. Capacity for almost no extra serial cost.
@@ -33,6 +44,17 @@ Most production work, then, is not about reinventing attention. It is about quan
 ## Common pitfalls
 
 The most expensive mistakes are rarely in the model. They are in the evaluation. A number that looks too good usually is — and the gap between an offline metric and live behavior is where most teams quietly lose weeks.
+
+```quickcheck
+q: Offline eval accuracy sits far above live production performance. The most likely culprit is…
+options:
+  - The model is too small
+  - Train/eval contamination or distribution shift
+  - The learning rate is too low
+  - Too few attention heads
+answer: 1
+explanation: A gap that large almost always means the eval set leaked into training, or it no longer matches the live distribution — rarely a raw capacity problem.
+```
 
 ## Closing thoughts
 
