@@ -1,17 +1,3 @@
----
-title: Notes on Retrieval-Augmented Generation, without the hype
-description: What the benchmarks tell you, what they hide, and how to read the difference between them.
-date: 2026-06-09
-author: Yuki Tanaka
-category: Retrieval
-tags:
-  - rag
-  - retrieval
-  - nlp
-hue: 250
-featured: false
----
-
 Retrieval-augmented generation is the most over-promised and under-specified pattern in applied AI. The premise is sound: give the model the right context at inference time instead of baking everything into weights. The disappointment usually comes from treating retrieval as solved when it is the hard part.
 
 ## Retrieval is the bottleneck

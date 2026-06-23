@@ -1,16 +1,3 @@
----
-title: Inside Inference Optimization
-description: A field guide for engineers who would rather understand why than memorize how.
-date: 2026-05-25
-author: Yuki Tanaka
-category: Serving
-tags:
-  - serving
-  - infra
-hue: 235
-featured: false
----
-
 Training gets the headlines; inference pays the bills. Every request a model serves is a recurring cost, and the difference between a naive and a tuned serving stack is often an order of magnitude in dollars. Knowing where the time goes is most of the battle.
 
 ## Decoding is memory-bound

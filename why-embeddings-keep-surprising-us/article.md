@@ -1,17 +1,3 @@
----
-title: Why Embeddings keep surprising us
-description: We trace the idea from a napkin sketch to a system that holds up under real production traffic.
-date: 2026-05-31
-author: Dr. Lena Park
-category: NLP
-tags:
-  - embeddings
-  - nlp
-  - retrieval
-hue: 245
-featured: false
----
-
 Embeddings are the most useful idea in modern machine learning that almost nobody fully understands. Map things — words, images, users — into a vector space where distance means similarity, and a startling range of problems become nearest-neighbor lookups.
 
 ## Geometry is the feature

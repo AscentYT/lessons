@@ -1,17 +1,3 @@
----
-title: Understanding Mixture of Experts from first principles
-description: A clear-eyed look at the mechanics, the trade-offs, and the parts most write-ups quietly skip over.
-date: 2026-05-22
-author: Aisha Okonkwo
-category: Large Models
-tags:
-  - llm
-  - moe
-  - training
-hue: 255
-featured: false
----
-
 Mixture of experts answers a tempting question: what if a model could have far more parameters without paying for all of them on every token? The trick is to route each token to a small subset of specialized sub-networks, so capacity grows while per-token compute stays roughly flat.
 
 ## Routing is the whole game

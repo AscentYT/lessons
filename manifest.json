@@ -1,0 +1,215 @@
+[
+  {
+    "slug": "understanding-transformers",
+    "title": "Understanding Transformers from first principles",
+    "description": "A clear-eyed look at the mechanics, the trade-offs, and the parts most write-ups quietly skip over.",
+    "date": "2026-06-18",
+    "author": "Dr. Lena Park",
+    "category": "Large Models",
+    "tags": [
+      "llm",
+      "transformers",
+      "deep-dive"
+    ],
+    "hue": 220,
+    "featured": true,
+    "quickChecks": [
+      {
+        "q": "In scaled dot-product attention, the query–key dot product is divided by what before the softmax?",
+        "options": [
+          "The number of attention heads",
+          "The square root of the key dimension",
+          "The sequence length",
+          "The batch size"
+        ],
+        "answer": 1,
+        "why": "Dividing by √dₖ keeps the dot products from growing large in magnitude, which would otherwise push softmax into a near one-hot regime with vanishing gradients."
+      },
+      {
+        "q": "Offline eval accuracy sits far above live production performance. The most likely culprit is…",
+        "options": [
+          "The model is too small",
+          "Train/eval contamination or distribution shift",
+          "The learning rate is too low",
+          "Too few attention heads"
+        ],
+        "answer": 1,
+        "why": "A gap that large almost always means the eval set leaked into training, or it no longer matches the live distribution — rarely a raw capacity problem."
+      }
+    ],
+    "quiz": [
+      {
+        "q": "What does retrieval-augmented generation primarily reduce?",
+        "options": [
+          "Training cost",
+          "Hallucination on knowledge-heavy queries",
+          "GPU memory",
+          "Tokenizer size"
+        ],
+        "answer": 1
+      },
+      {
+        "q": "Quantizing weights to int8 mainly trades…",
+        "options": [
+          "Accuracy for capacity",
+          "Memory and latency for a small accuracy hit",
+          "Data for compute",
+          "Depth for width"
+        ],
+        "answer": 1
+      },
+      {
+        "q": "A mixture-of-experts layer grows total parameters while keeping what roughly constant?",
+        "options": [
+          "Training data",
+          "Per-token compute",
+          "Context length",
+          "Vocabulary size"
+        ],
+        "answer": 1
+      },
+      {
+        "q": "The √dₖ scaling inside attention exists to…",
+        "options": [
+          "Speed up matrix multiplies",
+          "Stabilize the softmax gradients",
+          "Reduce parameter count",
+          "Add a nonlinearity"
+        ],
+        "answer": 1
+      }
+    ]
+  },
+  {
+    "slug": "practical-guide-diffusion-models",
+    "title": "A practical guide to Diffusion Models",
+    "description": "We trace the idea from a napkin sketch to a system that holds up under real production traffic.",
+    "date": "2026-06-15",
+    "author": "Marcus Reed",
+    "category": "Vision",
+    "tags": [
+      "vision",
+      "generative"
+    ],
+    "hue": 265,
+    "featured": false
+  },
+  {
+    "slug": "rlhf-what-actually-works",
+    "title": "RLHF: what actually works in production",
+    "description": "Less theory, more of the messy decisions you actually face when shipping this into the world.",
+    "date": "2026-06-12",
+    "author": "Aisha Okonkwo",
+    "category": "Safety",
+    "tags": [
+      "rlhf",
+      "safety",
+      "training"
+    ],
+    "hue": 210,
+    "featured": false
+  },
+  {
+    "slug": "notes-on-rag",
+    "title": "Notes on Retrieval-Augmented Generation, without the hype",
+    "description": "What the benchmarks tell you, what they hide, and how to read the difference between them.",
+    "date": "2026-06-09",
+    "author": "Yuki Tanaka",
+    "category": "Retrieval",
+    "tags": [
+      "rag",
+      "retrieval",
+      "nlp"
+    ],
+    "hue": 250,
+    "featured": false
+  },
+  {
+    "slug": "inside-agentic-workflows",
+    "title": "Inside Agentic Workflows",
+    "description": "A field guide for engineers who would rather understand the why than memorize the how",
+    "date": "2026-06-06",
+    "author": "Sam Becker",
+    "category": "Agents",
+    "tags": [
+      "agents",
+      "tools",
+      "infra"
+    ],
+    "hue": 230,
+    "featured": false
+  },
+  {
+    "slug": "quiet-tradeoffs-of-quantization",
+    "title": "The quiet trade-offs of Quantization",
+    "description": "A clear-eyed look at the mechanics, the trade-offs, and the parts most write-ups quietly skip over.",
+    "date": "2026-06-03",
+    "author": "Priya Nair",
+    "category": "Infrastructure",
+    "tags": [
+      "serving",
+      "infra",
+      "eval"
+    ],
+    "hue": 200,
+    "featured": false
+  },
+  {
+    "slug": "why-embeddings-keep-surprising-us",
+    "title": "Why Embeddings keep surprising us",
+    "description": "We trace the idea from a napkin sketch to a system that holds up under real production traffic.",
+    "date": "2026-05-31",
+    "author": "Dr. Lena Park",
+    "category": "NLP",
+    "tags": [
+      "embeddings",
+      "nlp",
+      "retrieval"
+    ],
+    "hue": 245,
+    "featured": false
+  },
+  {
+    "slug": "model-evaluation-in-production",
+    "title": "Model Evaluation: what actually works in production",
+    "description": "Less theory, more of the messy decisions you actually face when shipping this into the world.",
+    "date": "2026-05-28",
+    "author": "Marcus Reed",
+    "category": "Evaluation",
+    "tags": [
+      "eval",
+      "serving"
+    ],
+    "hue": 215,
+    "featured": false
+  },
+  {
+    "slug": "inference-optimization-field-guide",
+    "title": "Inside Inference Optimization",
+    "description": "A field guide for engineers who would rather understand why than memorize how.",
+    "date": "2026-05-25",
+    "author": "Yuki Tanaka",
+    "category": "Serving",
+    "tags": [
+      "serving",
+      "infra"
+    ],
+    "hue": 235,
+    "featured": false
+  },
+  {
+    "slug": "mixture-of-experts-explained",
+    "title": "Understanding Mixture of Experts from first principles",
+    "description": "A clear-eyed look at the mechanics, the trade-offs, and the parts most write-ups quietly skip over.",
+    "date": "2026-05-22",
+    "author": "Aisha Okonkwo",
+    "category": "Large Models",
+    "tags": [
+      "llm",
+      "moe",
+      "training"
+    ],
+    "hue": 255,
+    "featured": false
+  }
+]

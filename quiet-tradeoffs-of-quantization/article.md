@@ -1,17 +1,3 @@
----
-title: The quiet trade-offs of Quantization
-description: A clear-eyed look at the mechanics, the trade-offs, and the parts most write-ups quietly skip over.
-date: 2026-06-03
-author: Priya Nair
-category: Infrastructure
-tags:
-  - serving
-  - infra
-  - eval
-hue: 200
-featured: false
----
-
 Quantization is the cheapest large win in inference: store and compute with fewer bits, and the model gets smaller and faster almost for free. Almost. The trade-offs are real, just quiet enough that teams discover them in production instead of in the design doc.
 
 ## Where the bits go

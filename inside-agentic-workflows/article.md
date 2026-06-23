@@ -1,17 +1,3 @@
----
-title: Inside Agentic Workflows
-description: A field guide for engineers who would rather understand the why than memorize the how
-date: 2026-06-06
-author: Sam Becker
-category: Agents
-tags:
-  - agents
-  - tools
-  - infra
-hue: 230
-featured: false
----
-
 An agent is a loop: the model proposes an action, a tool executes it, the result comes back, and the model decides what to do next. Everything that makes agents useful — and everything that makes them fragile — lives in that loop.
 
 ## Tools are the interface to reality

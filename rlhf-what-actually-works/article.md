@@ -1,17 +1,3 @@
----
-title: "RLHF: what actually works in production"
-description: Less theory, more of the messy decisions you actually face when shipping this into the world.
-date: 2026-06-12
-author: Aisha Okonkwo
-category: Safety
-tags:
-  - rlhf
-  - safety
-  - training
-hue: 210
-featured: false
----
-
 Reinforcement learning from human feedback gets described as if it were one technique. In practice it is a pipeline, and most of the difficulty is in the parts nobody puts in the diagram: collecting preferences, training a reward model that does not get gamed, and keeping the policy from drifting somewhere strange.
 
 ## Preferences are the product

@@ -1,16 +1,3 @@
----
-title: "Model Evaluation: what actually works in production"
-description: Less theory, more of the messy decisions you actually face when shipping this into the world.
-date: 2026-05-28
-author: Marcus Reed
-category: Evaluation
-tags:
-  - eval
-  - serving
-hue: 215
-featured: false
----
-
 Evaluation is where good intentions go to die. Everyone agrees it matters; almost everyone underinvests until a regression ships. The teams that move fast are not the ones that skip evals — they are the ones whose evals are fast enough to trust on every change.
 
 ## Offline and online disagree, on purpose

@@ -1,16 +1,3 @@
----
-title: A practical guide to Diffusion Models
-description: We trace the idea from a napkin sketch to a system that holds up under real production traffic.
-date: 2026-06-15
-author: Marcus Reed
-category: Vision
-tags:
-  - vision
-  - generative
-hue: 265
-featured: false
----
-
 Diffusion models look intimidating from the outside and almost embarrassingly simple from the inside. You take data, gradually destroy it with noise, and train a network to undo one small step of that destruction. Sample by running the undo loop from pure noise. That is the whole idea.
 
 ## The forward process
