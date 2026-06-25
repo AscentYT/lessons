@@ -49,8 +49,8 @@ Each neighbor gets one vote. Whichever label gets the most votes wins, and that 
 
 ```image
 src: knn-vote.png
-alt: The same scatter plot with a new unlabeled point marked with a question mark. A dashed circle surrounds its 5 nearest neighbors, 3 cats and 2 dogs. A vote tally annotation shows cats winning 3 to 2. The new point is labeled as predicted cat.
-caption: The new animal is surrounded by 3 cats and 2 dogs, so KNN predicts cat.
+alt: KNN vote
+caption: The new animal is surrounded by 3 dogs, so KNN predicts dog.
 fit: contain
 ```
 
