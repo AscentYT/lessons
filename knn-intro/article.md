@@ -1,110 +1,83 @@
-# Understanding the K-Nearest Neighbors (KNN) Algorithm
-
-> This article is a beginner-friendly introduction to KNN. No prior machine learning experience is required, just a basic comfort with numbers and curiosity about how AI works.
+> This is a high-level introduction to K-Nearest Neighbors, based on the video below, one of our earlier lessons that still covers the core ideas well. We will walk through how the algorithm works, what the K parameter means, and how to implement it in Python. No prior machine learning experience is needed.
 
 ```video
 src: https://www.youtube.com/watch?v=nf-8ed80cPY&t=2s
-caption: A visual walkthrough of how the KNN algorithm classifies data points
+caption: Our original KNN walkthrough, covering classification, distance, and the effect of K
 ```
 
-Machine learning algorithms allow computers to make decisions by finding patterns in data. One of the simplest and most intuitive algorithms used for this purpose is **K-Nearest Neighbors (KNN)**.
+Machine learning is about teaching computers to make decisions by showing them examples. One of the simplest ways to do this is an algorithm called **K-Nearest Neighbors (KNN)**.
 
-KNN is a :vocab[supervised machine learning algorithm]{definition="A type of algorithm that learns from labeled training data, where each example includes both an input and the correct answer. The model uses these examples to make predictions on new, unseen data."} used for both classification and regression tasks. In classification problems, its goal is to determine which category a new data point belongs to based on examples it has seen before.
+KNN is a :vocab[supervised machine learning algorithm]{definition="A type of algorithm that learns from labeled examples. Each example includes an input and the correct answer, and the model uses those examples to make predictions on new data it has never seen."} used to sort new data into categories. To do that, it looks at the examples it has already seen and asks: which ones are most similar to this new piece of data? Whatever category most of those similar examples belong to, that is the category it assigns.
 
-Despite its simplicity, KNN demonstrates many of the fundamental ideas behind machine learning: representing data with features, measuring similarity, and making predictions from previous observations.
+## Plotting Data as Points on a Graph
 
-## How Computers Represent Data
+Before KNN can do anything, the data needs to be turned into a format a computer can work with. That format is numbers, and those numbers can be plotted as points on a graph.
 
-Before a machine learning model can make predictions, data must be represented numerically.
+Here is how it works. Say you want to teach a computer to tell the difference between cats and dogs based on two measurements: weight and height.
 
-Each piece of data is described using one or more :vocab[features]{definition="Measurable properties or characteristics of the data used as input to a machine learning model. For example, the height and weight of an animal are both features."}, which are measurable characteristics of an observation. For example, if we were building a model to classify animals, features might include weight, height, tail length, or ear size.
+For each animal in your dataset, you have two numbers. Weight becomes the position on the horizontal axis (left to right), and height becomes the position on the vertical axis (up and down). That gives every animal a specific spot on the graph. A heavy, tall dog ends up in the top right. A light, short cat ends up in the bottom left. Each animal is now a single dot.
 
-```image
-src: feature-space.png
-alt: A 2D grid showing animals plotted by weight on the x-axis and height on the y-axis, colored by species
-caption: Each animal becomes a point in a 2D feature space defined by its measurements
-fit: contain
-```
+These measurements are called :vocab[features]{definition="The numbers that describe a piece of data. Each feature is one measurement, like weight or height. Together, the features place a data point at a specific spot on the graph."}.
 
-Each observation can then be represented as a point in a mathematical space. A dataset containing many observations forms a collection of points, where each point corresponds to a known example.
+> [diagram needed] A simple 2D graph. X-axis labeled "Weight", Y-axis labeled "Height". Several dots plotted, some labeled "cat" (small, clustered bottom-left), some labeled "dog" (larger, clustered top-right). Show one dot with a dotted line dropping down to the x-axis and across to the y-axis, with the values labeled, to show how its position is determined by its two measurements.
 
-Because these examples already have labels, they become the :vocab[training data]{definition="A labeled dataset used to teach a machine learning model. Each example includes both the input features and the correct output label."} that KNN uses to make future predictions.
+Once every animal is plotted, animals of the same type tend to cluster together. Cats group near other cats, dogs near other dogs. That clustering is what KNN takes advantage of.
+
+This collection of labeled examples is called the :vocab[training data]{definition="The set of examples the model learns from. Each example has both its measurements (features) and the correct label, like cat or dog."}.
 
 ```quickcheck
-q: What is a "feature" in a machine learning dataset?
+q: How does KNN use a data point's features?
 options:
-  - A measurable characteristic used as input to a model
-  - The final prediction made by an algorithm
-  - The number of neighbors considered by KNN
-  - A type of distance metric
+  - It uses them to place the point at a specific position on a graph
+  - It uses them to choose the value of K
+  - It uses them to calculate accuracy
+  - It stores them but does not use them during prediction
 answer: 0
-explanation: Features are the measurable properties of each observation, the inputs a model uses to make predictions.
+explanation: Each feature becomes a coordinate on the graph. Together they determine exactly where the point is plotted, which is what KNN uses to find similar examples nearby.
 ```
 
-## The Core Idea Behind KNN
+## How KNN Makes a Prediction
 
-The central assumption of KNN is simple:
+When a new, unlabeled animal comes in, KNN plots it on the same graph using its measurements. Then it looks at the K closest labeled points around it. Those are its :vocab[nearest neighbors]{definition="The labeled examples closest in distance to the new point on the graph. KNN uses them to vote on what label the new point should get."}.
 
-> Similar data points are likely to belong to the same category.
+Each neighbor gets one vote. Whichever label gets the most votes wins, and that becomes the prediction.
 
-When a new, unlabeled observation is introduced, the algorithm examines the examples that are most similar to it. These nearby examples are its :vocab[nearest neighbors]{definition="The training examples closest in distance to a new data point. KNN uses these neighbors to vote on what label the new point should receive."}.
+> [diagram needed] The same graph as above, with a new unlabeled point marked with a question mark. A dashed circle drawn around its 5 nearest neighbors. Three are cats, two are dogs. An annotation shows the tally: cats 3, dogs 2. Arrow pointing to the new point labeled "predicted: cat".
 
-```image
-src: knn-voting.png
-alt: A new unlabeled point surrounded by 5 neighbors, 3 labeled class A and 2 labeled class B, with the new point assigned class A
-caption: With K = 5, the new point is classified as class A because 3 of its 5 neighbors belong to that class
-fit: contain
-```
+## Choosing K
 
-KNN predicts the label of the new observation by looking at the labels of these neighbors and choosing the category that appears most frequently.
+The number K controls how many neighbors get a vote.
 
-For example, suppose a new data point has five nearest neighbors. If three belong to one class and two belong to another, the algorithm will classify the new point as belonging to the majority class.
+If K is small, like 1, the prediction is based entirely on whichever single point happens to be closest. That one point might be an unusual outlier, which can throw off the result. This is called :vocab[overfitting]{definition="When a model is too influenced by specific examples in the training data, including noisy or unusual ones, causing it to make poor predictions on new data."}.
 
-This voting process forms the basis of KNN classification.
+If K is large, many points vote, which smooths out those mistakes. But if K is too large, the model starts pulling in points that are not really that similar, and the predictions become too general.
 
-## Understanding the Value of K
-
-The parameter **K** determines how many neighbors are considered when making a prediction. Choosing an appropriate value for K is important because it directly affects the behavior of the model.
-
-### Small Values of K
-
-When K is very small, such as K = 1, predictions depend heavily on the closest example. This can make the model highly sensitive to noise or unusual data points, often leading to :vocab[overfitting]{definition="When a model learns the training data too precisely, including its noise, and performs poorly on new, unseen data."}.
-
-### Large Values of K
-
-As K increases, predictions are influenced by a larger portion of the dataset. This generally makes the model more stable, but if K becomes too large, the model may overlook important local patterns and produce overly generalized predictions.
-
-Finding the right value of K usually requires experimentation and testing.
-
-```image
-src: k-comparison.png
-alt: Side-by-side decision boundaries for K=1, K=5, and K=20, showing how the boundary becomes smoother as K grows
-caption: A small K produces jagged, sensitive boundaries. A larger K produces smoother, more generalized ones.
-fit: contain
-```
+> [diagram needed] Three side-by-side plots showing decision boundaries for K = 1, K = 5, and K = 20. K = 1 should look jagged and irregular. K = 5 smoother. K = 20 very smooth but potentially misclassifying some edge points. Label each plot with its K value.
 
 ```quickcheck
-q: What is the risk of using a very small value of K (e.g. K = 1)?
+q: What is the risk of setting K = 1?
 options:
-  - The model becomes too slow to run
-  - The model may overfit and be sensitive to noise
-  - The model ignores all training data
-  - Euclidean distance can no longer be computed
+  - The model becomes too slow
+  - One unusual example can control the whole prediction
+  - The model ignores training data
+  - Distance calculations break down
 answer: 1
-explanation: With K = 1, a single unusual or mislabeled neighbor can determine the prediction, making the model fragile and prone to overfitting.
+explanation: With K = 1, a single neighbor determines the prediction. If that neighbor is an outlier or mislabeled, the prediction will be wrong. Using more neighbors evens this out.
 ```
 
-## Measuring Similarity
+## How KNN Measures Distance
 
-To determine which neighbors are closest, KNN must calculate the distance between data points. The most common distance metric is :vocab[Euclidean distance]{definition="The straight-line distance between two points in space, calculated as the square root of the sum of squared differences across all dimensions."}, which measures the straight-line distance between two points.
+To find the nearest neighbors, KNN needs to measure how far apart two points are on the graph. The most common way to do this is :vocab[Euclidean distance]{definition="The straight-line distance between two points on a graph, the same as what you would measure with a ruler."}, which is just the straight-line distance between them, the same as if you put a ruler on the graph.
 
-The smaller the distance, the more similar the points are considered to be. Other distance metrics, such as Manhattan distance and Minkowski distance, can also be used depending on the problem.
+The closer two points are, the more similar the algorithm considers them to be.
+
+> [diagram needed] Two labeled points on a graph with a straight line connecting them. Label the line "distance". Show the horizontal and vertical gaps as a right triangle to illustrate how the distance is calculated from the two measurements.
 
 ## Implementing KNN in Python
 
-Python's Scikit-learn library makes it straightforward to train and evaluate a KNN classifier. Below is a complete example using the classic Iris dataset.
+Python's Scikit-learn library makes it easy to build a KNN classifier. The example below uses the Iris dataset, a classic beginner dataset with measurements of three types of flowers.
 
-Start by loading the data and splitting it into training and testing sets:
+Start by loading the data and splitting it into a training set and a test set:
 
 ```python
 from sklearn.datasets import load_iris
@@ -123,9 +96,9 @@ X_train = scaler.fit_transform(X_train)
 X_test = scaler.transform(X_test)
 ```
 
-Feature scaling is applied here because KNN relies on distance. Without it, a feature measured in large numbers would dominate the distance calculation over one measured in small numbers.
+The scaling step adjusts all the measurements to a similar range. This matters because KNN uses distance. If one measurement is in the thousands and another is in the tens, the larger one will always dominate the distance calculation, even if both measurements are equally important.
 
-Next, train the classifier and evaluate it:
+Next, train the model and check how well it performs:
 
 ```python
 from sklearn.neighbors import KNeighborsClassifier
@@ -141,7 +114,7 @@ print(f"Accuracy: {accuracy:.2%}")
 # Accuracy: 100.00%
 ```
 
-To find the best value of K, loop over several candidates and compare their accuracy on the test set:
+To find the best K, test a range of values and see which one performs best:
 
 ```python
 accuracies = {}
@@ -155,37 +128,32 @@ best_k = max(accuracies, key=accuracies.get)
 print(f"Best K: {best_k} ({accuracies[best_k]:.2%} accuracy)")
 ```
 
-```image
-src: k-accuracy-plot.png
-alt: A line chart showing test accuracy on the y-axis against values of K from 1 to 20 on the x-axis
-caption: Plotting accuracy against K helps identify the point where adding more neighbors stops improving performance
-fit: contain
-```
+> [diagram needed] A line chart with K on the x-axis (1 to 20) and accuracy percentage on the y-axis. Highlight the highest point with a marker or annotation showing the best K value.
 
 ```quickcheck
-q: Why is feature scaling applied before training a KNN model?
+q: Why do we scale the features before training KNN?
 options:
   - To reduce the number of neighbors considered
-  - To ensure no feature dominates distance calculations due to its scale
+  - So no single measurement dominates the distance calculation
   - To convert labels into numbers
-  - To speed up the voting process
+  - To speed up training
 answer: 1
-explanation: If one feature has much larger values than another, it will dominate the distance calculation. Scaling puts all features on a comparable range so each contributes fairly.
+explanation: KNN measures distance between points. If one feature has much larger values than another, it will have an outsized effect on every distance calculation. Scaling brings all features to a comparable range.
 ```
 
-## Working in Higher Dimensions
+## What About More Than Two Features?
 
-Many introductory examples use only two features because they are easy to visualize. Real-world datasets, however, often contain dozens or even hundreds of features.
+The examples above use two measurements so they are easy to draw on a graph. Real datasets often have dozens or hundreds of measurements per example. You cannot draw a 100-dimensional graph, but KNN works the same way regardless of how many features there are.
 
-Whether a dataset contains three features, ten features, or hundreds of features, the algorithm follows the same process:
+For any number of features, the steps are always:
 
-1. Calculate distances between points.
-2. Identify the K nearest neighbors.
-3. Determine the most common label.
-4. Assign that label to the new observation.
+1. Calculate the distance between the new point and every training example.
+2. Pick the K closest ones.
+3. Count which label appears most among them.
+4. Assign that label to the new point.
 
 ## Conclusion
 
-K-Nearest Neighbors is one of the most intuitive machine learning algorithms. Rather than learning a complex mathematical model, it makes predictions by comparing new observations to examples it has already seen.
+K-Nearest Neighbors works by turning data into points on a graph and finding the labeled examples closest to a new, unlabeled point. Whatever label most of those neighbors have, that is the prediction.
 
-Although more advanced algorithms exist, KNN provides an excellent foundation for the fundamental concepts of machine learning: feature representation, similarity measurement, classification, and model evaluation. Understanding KNN lays the groundwork for exploring more sophisticated techniques used throughout modern AI.
+It is a great first algorithm to learn because the logic mirrors how people naturally think: if something looks like a duck and walks like a duck, it is probably a duck. The same intuition powers a lot of more advanced machine learning as well.
