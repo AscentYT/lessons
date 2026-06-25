@@ -15,14 +15,14 @@ Before KNN can do anything, the data needs to be turned into a format a computer
 
 Here is how it works. Say you want to teach a computer to tell the difference between cats and dogs based on two measurements: tail length and ear shape (scored on a scale from pointy to floppy).
 
-For each animal in your dataset, you have two numbers. Tail length becomes the position on the horizontal axis (left to right), and ear shape becomes the position on the vertical axis (up and down). That gives every animal a specific spot on the graph. A dog with a long tail and floppy ears ends up in the top right. A cat with a short tail and pointy ears ends up in the bottom left. Each animal is now a single dot.
+For each animal in your dataset, you have two numbers. Ear shape becomes the position on the horizontal axis (left to right), and tail length becomes the position on the vertical axis (up and down). That gives every animal a specific spot on the graph. A dog with a long tail and floppy ears ends up in the top right. A cat with a short tail and pointy ears ends up in the bottom left. Each animal is now a single dot.
 
 These measurements are called :vocab[features]{definition="The numbers that describe a piece of data. Each feature is one measurement, like tail length or ear shape. Together, the features place a data point at a specific spot on the graph."}.
 
 ```image
 src: feature-plot.png
-alt: A 2D scatter plot with Tail Length on the x-axis and Ear Shape on the y-axis. Cat dots cluster in the bottom-left, dog dots in the top-right. One dot has dotted lines showing how its x and y position map to its tail length and ear shape measurements.
-caption: Each animal becomes a dot. Its tail length sets how far right it goes, its ear shape sets how far up it goes.
+alt: A 2D scatter plot with Ear Shape on the x-axis and Tail Length on the y-axis. Cat dots cluster in the bottom-left, dog dots in the top-right. One dot has dotted lines to show how its position on both axes maps to its two measurements.
+caption: Each animal becomes a dot. Its ear shape sets how far right it goes, its tail length sets how far up it goes.
 fit: contain
 ```
 
@@ -49,7 +49,7 @@ Each neighbor gets one vote. Whichever label gets the most votes wins, and that 
 
 ```image
 src: knn-vote.png
-alt: The same scatter plot with a new unlabeled point marked with a question mark. A dashed circle surrounds its 5 nearest neighbors: 3 cats and 2 dogs. A vote tally shows cats 3, dogs 2. The new point is labeled predicted: cat.
+alt: The same scatter plot with a new unlabeled point marked with a question mark. A dashed circle surrounds its 5 nearest neighbors, 3 cats and 2 dogs. A vote tally annotation shows cats winning 3 to 2. The new point is labeled as predicted cat.
 caption: The new animal is surrounded by 3 cats and 2 dogs, so KNN predicts cat.
 fit: contain
 ```
@@ -131,7 +131,7 @@ predictions = knn.predict(X_test)
 accuracy = accuracy_score(y_test, predictions)
 
 print(f"Accuracy: {accuracy:.2%}")
-# Accuracy: 100.00%
+# Accuracy: 90.00%
 ```
 
 To find the best K, test a range of values and see which one performs best:
@@ -145,7 +145,7 @@ for k in range(1, 21):
     accuracies[k] = accuracy_score(y_test, model.predict(X_test))
 
 best_k = max(accuracies, key=accuracies.get)
-print(f"Best K: {best_k} ({accuracies[best_k]:.2%} accuracy)") # 0.9
+print(f"Best K: {best_k} ({accuracies[best_k]:.2%} accuracy)")
 ```
 
 ```quickcheck
